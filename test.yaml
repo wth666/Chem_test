@@ -1,7 +1,7 @@
 generator: ck2yaml
 input-files: [test.inp, thermo.dat]
 cantera-version: 2.6.0
-date: Tue, 03 Jun 2025 09:17:07 +0800
+date: Tue, 03 Jun 2025 14:25:51 +0800
 
 units: {length: cm, time: s, quantity: mol, activation-energy: cal/mol}
 
@@ -9,7 +9,7 @@ phases:
 - name: gas
   thermo: ideal-gas
   elements: [O, H, N, Ar]
-  species: [H2, H, O, O2, OH, HO2, H2O2, H2O, N2, AR]
+  species: [H2, H, O2, OH, HO2, H2O2, H2O, N2, AR]
   kinetics: gas
   state: {T: 300.0, P: 1 atm}
 
@@ -36,21 +36,6 @@ species:
     - [2.50000001, -2.30842973e-11, 1.61561948e-14, -4.73515235e-18, 4.98197357e-22,
       2.54736599e+04, -0.446682914]
     note: L 7/88
-- name: O
-  composition: {O: 1}
-  thermo:
-    model: NASA7
-    temperature-ranges: [200.0, 1000.0, 3500.0]
-    data:
-    - [3.1682671, -3.27931884e-03, 6.64306396e-06, -6.12806624e-09, 2.11265971e-12,
-      2.91222592e+04, 2.05193346]
-    - [2.56942078, -8.59741137e-05, 4.19484589e-08, -1.00177799e-11, 1.22833691e-15,
-      2.92175791e+04, 4.78433864]
-    note: |-
-      L 1/90
-       GRI-Mech Version 3.0 Thermodynamics released 7/30/99
-       NASA Polynomial format for CHEMKIN-II
-       see README file for disclaimer
 - name: O2
   composition: {O: 2}
   thermo:
