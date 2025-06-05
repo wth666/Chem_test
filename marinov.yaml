@@ -1,7 +1,7 @@
 generator: ck2yaml
 input-files: [marinov.inp, thermo.dat]
 cantera-version: 2.6.0
-date: Thu, 05 Jun 2025 16:58:09 +0800
+date: Thu, 05 Jun 2025 21:26:57 +0800
 
 units: {length: cm, time: s, quantity: mol, activation-energy: cal/mol}
 
@@ -186,7 +186,6 @@ reactions:
   type: falloff
   low-P-rate-constant: {A: 3.04e+30, b: -4.63, Ea: 2049.0}
   high-P-rate-constant: {A: 1.24e+14, b: -0.37, Ea: 0.0}
-  Troe: {A: 0.47, T3: 100.0, T1: 2000.0, T2: 1.0e+15}
 - equation: H2O2 + H <=> HO2 + H2  # Reaction 23
   rate-constant: {A: 1.98e+06, b: 2.0, Ea: 2435.0}
 - equation: H2O2 + H <=> OH + H2O  # Reaction 24
