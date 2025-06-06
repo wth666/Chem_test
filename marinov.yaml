@@ -1,7 +1,7 @@
 generator: ck2yaml
 input-files: [marinov.inp, thermo.dat]
 cantera-version: 2.6.0
-date: Fri, 06 Jun 2025 22:14:45 +0800
+date: Fri, 06 Jun 2025 22:34:45 +0800
 
 units: {length: cm, time: s, quantity: mol, activation-energy: cal/mol}
 
@@ -122,9 +122,10 @@ reactions:
   rate-constant: {A: 2.02e+14, b: -0.4, Ea: 0.0}
 - equation: O + H2 <=> OH + H  # Reaction 3
   rate-constant: {A: 5.06e+04, b: 2.67, Ea: 6290.0}
-- equation: H + O2 + M <=> HO2 + M  # Reaction 4
-  type: three-body
-  rate-constant: {A: 4.52e+13, b: 0.0, Ea: 0.0}
+- equation: H + O2 (+M) <=> HO2 (+M)  # Reaction 4
+  type: falloff
+  low-P-rate-constant: {A: 1.05e+19, b: -1.257, Ea: 0.0}
+  high-P-rate-constant: {A: 4.52e+13, b: 0.0, Ea: 0.0}
 - equation: OH + HO2 <=> H2O + O2  # Reaction 5
   rate-constant: {A: 2.13e+28, b: -4.827, Ea: 3500.0}
 - equation: H + HO2 <=> OH + OH  # Reaction 6
