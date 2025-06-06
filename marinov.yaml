@@ -1,7 +1,7 @@
 generator: ck2yaml
 input-files: [marinov.inp, thermo.dat]
 cantera-version: 2.6.0
-date: Fri, 06 Jun 2025 19:30:21 +0800
+date: Fri, 06 Jun 2025 19:39:11 +0800
 
 units: {length: cm, time: s, quantity: mol, activation-energy: cal/mol}
 
@@ -150,15 +150,19 @@ reactions:
   type: three-body
   rate-constant: {A: 1.89e+13, b: 0.0, Ea: -1788.0}
 - equation: HO2 + HO2 <=> H2O2 + O2  # Reaction 15
+  duplicate: true
   rate-constant: {A: 4.2e+14, b: 0.0, Ea: 1.1982e+04}
-- equation: OH + OH + M <=> H2O2 + M  # Reaction 16
+- equation: HO2 + HO2 <=> H2O2 + O2  # Reaction 16
+  duplicate: true
+  rate-constant: {A: 1.3e+11, b: 0.0, Ea: -1629.0}
+- equation: OH + OH + M <=> H2O2 + M  # Reaction 17
   type: three-body
   rate-constant: {A: 1.24e+14, b: -0.37, Ea: 0.0}
-- equation: H2O2 + H <=> HO2 + H2  # Reaction 17
+- equation: H2O2 + H <=> HO2 + H2  # Reaction 18
   rate-constant: {A: 1.98e+06, b: 2.0, Ea: 2435.0}
-- equation: H2O2 + H <=> OH + H2O  # Reaction 18
+- equation: H2O2 + H <=> OH + H2O  # Reaction 19
   rate-constant: {A: 3.07e+13, b: 0.0, Ea: 4217.0}
-- equation: H2O2 + O <=> OH + HO2  # Reaction 19
+- equation: H2O2 + O <=> OH + HO2  # Reaction 20
   rate-constant: {A: 9.55e+06, b: 2.0, Ea: 3970.0}
-- equation: H2O2 + OH <=> H2O + HO2  # Reaction 20
+- equation: H2O2 + OH <=> H2O + HO2  # Reaction 21
   rate-constant: {A: 2.4, b: 4.042, Ea: -2162.0}
