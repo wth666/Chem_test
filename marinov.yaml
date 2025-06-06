@@ -1,7 +1,7 @@
 generator: ck2yaml
 input-files: [marinov.inp, thermo.dat]
 cantera-version: 2.6.0
-date: Fri, 06 Jun 2025 19:46:00 +0800
+date: Fri, 06 Jun 2025 20:00:54 +0800
 
 units: {length: cm, time: s, quantity: mol, activation-energy: cal/mol}
 
@@ -141,12 +141,18 @@ reactions:
   duplicate: true
   type: three-body
   rate-constant: {A: 1.0e+18, b: -1.0, Ea: 0.0}
-- equation: H + H + H2 <=> H2 + H2  # Reaction 12
+- equation: H + H + M <=> H2 + M  # Reaction 12
   duplicate: true
+  type: three-body
   rate-constant: {A: 9.2e+16, b: -0.6, Ea: 0.0}
-- equation: H + H + H2O <=> H2 + H2O  # Reaction 13
+  efficiencies: {H2: 1.0, H: 0.0, O: 0.0, O2: 0.0, OH: 0.0, HO2: 0.0, H2O2: 0.0,
+    H2O: 0.0, AR: 0.0}
+- equation: H + H + M <=> H2 + M  # Reaction 13
   duplicate: true
+  type: three-body
   rate-constant: {A: 6.0e+19, b: -1.25, Ea: 0.0}
+  efficiencies: {H2: 0.0, H: 0.0, O: 0.0, O2: 0.0, OH: 0.0, HO2: 0.0, H2O2: 0.0,
+    H2O: 1.0, AR: 0.0}
 - equation: H + OH + M <=> H2O + M  # Reaction 14
   type: three-body
   rate-constant: {A: 2.21e+22, b: -2.0, Ea: 0.0}
