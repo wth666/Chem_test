@@ -1,15 +1,15 @@
 generator: ck2yaml
-input-files: [Ferrer.inp, thermo.dat]
+input-files: [marinov.inp, thermo.dat]
 cantera-version: 2.6.0
-date: Sat, 07 Jun 2025 13:26:32 +0800
+date: Sun, 08 Jun 2025 10:38:35 +0800
 
 units: {length: cm, time: s, quantity: mol, activation-energy: cal/mol}
 
 phases:
 - name: gas
   thermo: ideal-gas
-  elements: [H, O, Ar]
-  species: [H2, O2, H, O, OH, H2O, HO2, H2O2, AR]
+  elements: [O, H, Ar]
+  species: [H2, O2, OH, O, H, H2O, HO2, H2O2, AR]
   kinetics: gas
   state: {T: 300.0, P: 1 atm}
 
@@ -36,17 +36,17 @@ species:
     - [3.28253784, 1.48308754e-03, -7.57966669e-07, 2.09470555e-10, -2.16717794e-14,
       -1088.45772, 5.45323129]
     note: TPIS89
-- name: H
-  composition: {H: 1}
+- name: OH
+  composition: {O: 1, H: 1}
   thermo:
     model: NASA7
     temperature-ranges: [200.0, 1000.0, 3500.0]
     data:
-    - [2.5, 7.05332819e-13, -1.99591964e-15, 2.30081632e-18, -9.27732332e-22,
-      2.54736599e+04, -0.446682853]
-    - [2.50000001, -2.30842973e-11, 1.61561948e-14, -4.73515235e-18, 4.98197357e-22,
-      2.54736599e+04, -0.446682914]
-    note: L 7/88
+    - [3.99201543, -2.40131752e-03, 4.61793841e-06, -3.88113333e-09, 1.3641147e-12,
+      3615.08056, -0.103925458]
+    - [3.09288767, 5.48429716e-04, 1.26505228e-07, -8.79461556e-11, 1.17412376e-14,
+      3858.657, 4.4766961]
+    note: RUS 78
 - name: O
   composition: {O: 1}
   thermo:
@@ -62,17 +62,17 @@ species:
        GRI-Mech Version 3.0 Thermodynamics released 7/30/99
        NASA Polynomial format for CHEMKIN-II
        see README file for disclaimer
-- name: OH
-  composition: {O: 1, H: 1}
+- name: H
+  composition: {H: 1}
   thermo:
     model: NASA7
     temperature-ranges: [200.0, 1000.0, 3500.0]
     data:
-    - [3.99201543, -2.40131752e-03, 4.61793841e-06, -3.88113333e-09, 1.3641147e-12,
-      3615.08056, -0.103925458]
-    - [3.09288767, 5.48429716e-04, 1.26505228e-07, -8.79461556e-11, 1.17412376e-14,
-      3858.657, 4.4766961]
-    note: RUS 78
+    - [2.5, 7.05332819e-13, -1.99591964e-15, 2.30081632e-18, -9.27732332e-22,
+      2.54736599e+04, -0.446682853]
+    - [2.50000001, -2.30842973e-11, 1.61561948e-14, -4.73515235e-18, 4.98197357e-22,
+      2.54736599e+04, -0.446682914]
+    note: L 7/88
 - name: H2O
   composition: {H: 2, O: 1}
   thermo:
@@ -116,52 +116,87 @@ species:
     note: '120186'
 
 reactions:
-- equation: H2 + O2 <=> 2 OH  # Reaction 1
-  rate-constant: {A: 1.7e+13, b: 0.0, Ea: 4.778e+04}
-- equation: OH + H2 <=> H2O + H  # Reaction 2
-  rate-constant: {A: 1.17e+09, b: 1.3, Ea: 3626.0}
-  note: D-L$W
-- equation: H + O2 <=> OH + O  # Reaction 3
-  rate-constant: {A: 5.13e+16, b: -0.816, Ea: 1.6507e+04}
-  note: JAM,JCP 1981
-- equation: O + H2 <=> OH + H  # Reaction 4
-  rate-constant: {A: 1.8e+10, b: 1.0, Ea: 8826.0}
-- equation: H + O2 + M <=> HO2 + M  # Reaction 5
-  type: three-body
-  rate-constant: {A: 2.1e+18, b: -1.0, Ea: 0.0}
-  efficiencies: {H2O: 21.0, H2: 3.3, O2: 0.0}
-  note: SLACK
-- equation: H + O2 + O2 <=> HO2 + O2  # Reaction 6
-  rate-constant: {A: 6.7e+19, b: -1.42, Ea: 0.0}
-  note: SLACK,JAN
+- equation: OH + H2 <=> H + H2O  # Reaction 1
+  rate-constant: {A: 2.148e+08, b: 1.52, Ea: 3449.0}
+- equation: O + OH <=> O2 + H  # Reaction 2
+  rate-constant: {A: 2.02e+14, b: -0.4, Ea: 0.0}
+- equation: O + H2 <=> OH + H  # Reaction 3
+  rate-constant: {A: 5.06e+04, b: 2.67, Ea: 6290.0}
+- equation: H + O2 (+M) <=> HO2 (+M)  # Reaction 4
+  duplicate: true
+  type: falloff
+  low-P-rate-constant: {A: 1.05e+19, b: -1.257, Ea: 0.0}
+  high-P-rate-constant: {A: 4.52e+13, b: 0.0, Ea: 0.0}
+- equation: H + O2 (+M) <=> HO2 (+M)  # Reaction 5
+  duplicate: true
+  type: falloff
+  low-P-rate-constant: {A: 1.52e+19, b: -1.133, Ea: 0.0}
+  high-P-rate-constant: {A: 4.52e+13, b: 0.0, Ea: 0.0}
+  efficiencies: {H2: 1.0, H: 0.0, O: 0.0, O2: 0.0, OH: 0.0, HO2: 0.0, H2O2: 0.0,
+    H2O: 0.0, AR: 0.0}
+- equation: H + O2 (+M) <=> HO2 (+M)  # Reaction 6
+  duplicate: true
+  type: falloff
+  low-P-rate-constant: {A: 2.1e+23, b: -2.437, Ea: 0.0}
+  high-P-rate-constant: {A: 4.52e+13, b: 0.0, Ea: 0.0}
+  efficiencies: {H2: 0.0, H: 0.0, O: 0.0, O2: 0.0, OH: 0.0, HO2: 0.0, H2O2: 0.0,
+    H2O: 1.0, AR: 0.0}
 - equation: OH + HO2 <=> H2O + O2  # Reaction 7
-  rate-constant: {A: 5.0e+13, b: 0.0, Ea: 1000.0}
-- equation: H + HO2 <=> 2 OH  # Reaction 8
-  rate-constant: {A: 2.5e+14, b: 0.0, Ea: 1900.0}
-- equation: O + HO2 <=> O2 + OH  # Reaction 9
-  rate-constant: {A: 4.8e+13, b: 0.0, Ea: 1000.0}
-- equation: 2 OH <=> O + H2O  # Reaction 10
-  rate-constant: {A: 6.0e+08, b: 1.3, Ea: 0.0}
-  note: COHEN-WEST.
-- equation: H2 + M <=> H + H + M  # Reaction 11
+  duplicate: true
+  rate-constant: {A: 2.13e+28, b: -4.827, Ea: 3500.0}
+- equation: OH + HO2 <=> H2O + O2  # Reaction 8
+  duplicate: true
+  rate-constant: {A: 9.1e+14, b: 0.0, Ea: 1.0964e+04}
+- equation: H + HO2 <=> OH + OH  # Reaction 9
+  rate-constant: {A: 1.5e+14, b: 0.0, Ea: 1000.0}
+- equation: H + HO2 <=> H2 + O2  # Reaction 10
+  rate-constant: {A: 8.45e+11, b: 0.65, Ea: 1241.0}
+- equation: H + HO2 <=> O + H2O  # Reaction 11
+  rate-constant: {A: 3.01e+13, b: 0.0, Ea: 1721.0}
+- equation: O + HO2 <=> O2 + OH  # Reaction 12
+  rate-constant: {A: 3.25e+13, b: 0.0, Ea: 0.0}
+- equation: OH + OH <=> O + H2O  # Reaction 13
+  rate-constant: {A: 3.57e+04, b: 2.4, Ea: -2112.0}
+- equation: H + H + M <=> H2 + M  # Reaction 14
+  duplicate: true
   type: three-body
-  rate-constant: {A: 2.23e+12, b: 0.5, Ea: 9.26e+04}
-  efficiencies: {H2O: 6.0, H: 2.0, H2: 3.0}
-- equation: O2 + M <=> O + O + M  # Reaction 12
+  rate-constant: {A: 1.0e+18, b: -1.0, Ea: 0.0}
+- equation: H + H + M <=> H2 + M  # Reaction 15
+  duplicate: true
   type: three-body
-  rate-constant: {A: 1.85e+11, b: 0.5, Ea: 9.556e+04}
-- equation: H + OH + M <=> H2O + M  # Reaction 13
+  rate-constant: {A: 9.2e+16, b: -0.6, Ea: 0.0}
+  efficiencies: {H2: 1.0, H: 0.0, O: 0.0, O2: 0.0, OH: 0.0, HO2: 0.0, H2O2: 0.0,
+    H2O: 0.0, AR: 0.0}
+- equation: H + H + M <=> H2 + M  # Reaction 16
+  duplicate: true
   type: three-body
-  rate-constant: {A: 7.5e+23, b: -2.6, Ea: 0.0}
-  efficiencies: {H2O: 20.0}
-- equation: H + HO2 <=> H2 + O2  # Reaction 14
-  rate-constant: {A: 2.5e+13, b: 0.0, Ea: 700.0}
-- equation: HO2 + HO2 <=> H2O2 + O2  # Reaction 15
-  rate-constant: {A: 2.0e+12, b: 0.0, Ea: 0.0}
-- equation: H2O2 + M <=> OH + OH + M  # Reaction 16
+  rate-constant: {A: 6.0e+19, b: -1.25, Ea: 0.0}
+  efficiencies: {H2: 0.0, H: 0.0, O: 0.0, O2: 0.0, OH: 0.0, HO2: 0.0, H2O2: 0.0,
+    H2O: 1.0, AR: 0.0}
+- equation: H + OH + M <=> H2O + M  # Reaction 17
   type: three-body
-  rate-constant: {A: 1.3e+17, b: 0.0, Ea: 4.55e+04}
-- equation: H2O2 + H <=> HO2 + H2  # Reaction 17
-  rate-constant: {A: 1.6e+12, b: 0.0, Ea: 3800.0}
-- equation: H2O2 + OH <=> H2O + HO2  # Reaction 18
-  rate-constant: {A: 1.0e+13, b: 0.0, Ea: 1800.0}
+  rate-constant: {A: 2.21e+22, b: -2.0, Ea: 0.0}
+- equation: H + O + M <=> OH + M  # Reaction 18
+  type: three-body
+  rate-constant: {A: 4.71e+18, b: -1.0, Ea: 0.0}
+- equation: O + O + M <=> O2 + M  # Reaction 19
+  type: three-body
+  rate-constant: {A: 1.89e+13, b: 0.0, Ea: -1788.0}
+- equation: HO2 + HO2 <=> H2O2 + O2  # Reaction 20
+  duplicate: true
+  rate-constant: {A: 4.2e+14, b: 0.0, Ea: 1.1982e+04}
+- equation: HO2 + HO2 <=> H2O2 + O2  # Reaction 21
+  duplicate: true
+  rate-constant: {A: 1.3e+11, b: 0.0, Ea: -1629.0}
+- equation: OH + OH (+M) <=> H2O2 (+M)  # Reaction 22
+  type: falloff
+  low-P-rate-constant: {A: 3.04e+30, b: -4.63, Ea: 2049.0}
+  high-P-rate-constant: {A: 1.24e+14, b: -0.37, Ea: 0.0}
+- equation: H2O2 + H <=> HO2 + H2  # Reaction 23
+  rate-constant: {A: 1.98e+06, b: 2.0, Ea: 2435.0}
+- equation: H2O2 + H <=> OH + H2O  # Reaction 24
+  rate-constant: {A: 3.07e+13, b: 0.0, Ea: 4217.0}
+- equation: H2O2 + O <=> OH + HO2  # Reaction 25
+  rate-constant: {A: 9.55e+06, b: 2.0, Ea: 3970.0}
+- equation: H2O2 + OH <=> H2O + HO2  # Reaction 26
+  rate-constant: {A: 2.4, b: 4.042, Ea: -2162.0}
